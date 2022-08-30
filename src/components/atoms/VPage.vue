@@ -61,21 +61,23 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 40px;
+  height: 40px;
   margin: 0 2px;
+  border: 1px solid #edf2ee;
   color: $black_02;
   background-color: transparent;
   font-size: 14px;
-  border-radius: 3px;
-  box-sizing: border-box;
-  border-color: transparent;
+  border-radius: 8px;
+  // box-sizing: border-box;
+  // border-color: transparent;
   cursor: pointer;
-  outline: 0;
-  user-select: none;
+  // outline: 0;
+  // user-select: none;
 
   &:hover {
     border: 1px solid $grey_02;
+    background-color: #edf2ee !important;
   }
 
   &-active {

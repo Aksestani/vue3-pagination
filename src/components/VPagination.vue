@@ -1,12 +1,13 @@
 <template>
   <div class="PaginationContainer">
-    <li class="PaginationControl">
+    <a class="PaginationControl">
       <icon-chevron-left
         class="Control"
         :class="{ 'Control-active': isPrevControlsActive }"
         @click="goToPrev"
       />
-    </li>
+      <span>Previous</span>
+    </a>
     <ul class="Pagination">
       <v-page
         v-for="page in pagination"
@@ -17,13 +18,14 @@
         @update="updatePageHandler"
       />
     </ul>
-    <li class="PaginationControl">
+    <a class="PaginationControl">
+      <span>Next</span>
       <icon-chevron-right
         class="Control"
         :class="{ 'Control-active': isNextControlsActive }"
         @click="goToNext"
       />
-    </li>
+    </a>
   </div>
 </template>
 
@@ -51,15 +53,7 @@ export default defineComponent({
     },
     activeColor: {
       type: String,
-      default: '#DCEDFF',
-    },
-    hideFirstButton: {
-      type: Boolean,
-      default: false,
-    },
-    hideLastButton: {
-      type: Boolean,
-      default: false,
+      default: '#EDF2EE',
     },
   },
   emits: ['update:modelValue'],
@@ -68,7 +62,7 @@ export default defineComponent({
     // pagination
     const pagination = computed((): (number | null)[] => {
       const res = [];
-      const minPaginationElems = 3 + props.rangeSize * 2;
+      const minPaginationElems = 5 + props.rangeSize * 2;
 
       let rangeStart = props.pages <= minPaginationElems ? 1 : props.modelValue - props.rangeSize;
       let rangeEnd =
@@ -162,6 +156,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @import './src/assets/styles/_settings.scss';
+
 .PaginationContainer {
   display: flex;
   justify-content: space-between;
@@ -180,6 +175,17 @@ export default defineComponent({
 .PaginationControl {
   display: flex;
   align-items: center;
+}
+
+.PaginationContainer a {
+  padding: 8px 14px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.PaginationContainer a:hover {
+  background-color: #edf2ee;
 }
 
 .Control {
