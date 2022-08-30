@@ -1,12 +1,5 @@
 <template>
-  <ul class="Pagination">
-    <li v-if="!hideFirstButton" class="PaginationControl">
-      <icon-page-first
-        class="Control"
-        :class="{ 'Control-active': isPrevControlsActive }"
-        @click="goToFirst"
-      />
-    </li>
+  <div class="PaginationContainer">
     <li class="PaginationControl">
       <icon-chevron-left
         class="Control"
@@ -14,14 +7,16 @@
         @click="goToPrev"
       />
     </li>
-    <v-page
-      v-for="page in pagination"
-      :key="`pagination-page-${page}`"
-      :page="page"
-      :current="modelValue"
-      :active-color="activeColor"
-      @update="updatePageHandler"
-    />
+    <ul class="Pagination">
+      <v-page
+        v-for="page in pagination"
+        :key="`pagination-page-${page}`"
+        :page="page"
+        :current="modelValue"
+        :active-color="activeColor"
+        @update="updatePageHandler"
+      />
+    </ul>
     <li class="PaginationControl">
       <icon-chevron-right
         class="Control"
@@ -29,27 +24,18 @@
         @click="goToNext"
       />
     </li>
-    <li v-if="!hideLastButton" class="PaginationControl">
-      <icon-page-last
-        class="Control"
-        :class="{ 'Control-active': isNextControlsActive }"
-        @click="goToLast"
-      />
-    </li>
-  </ul>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import VPage from './atoms/VPage.vue';
-import IconPageFirst from '../assets/icons/page-first.svg';
-import IconPageLast from '../assets/icons/page-last.svg';
 import IconChevronLeft from '../assets/icons/chevron-left.svg';
 import IconChevronRight from '../assets/icons/chevron-right.svg';
 
 export default defineComponent({
   name: 'VPagination',
-  components: { IconPageFirst, IconChevronLeft, IconChevronRight, IconPageLast, VPage },
+  components: { IconChevronLeft, IconChevronRight, VPage },
   props: {
     pages: {
       type: Number,
@@ -82,7 +68,7 @@ export default defineComponent({
     // pagination
     const pagination = computed((): (number | null)[] => {
       const res = [];
-      const minPaginationElems = 5 + props.rangeSize * 2;
+      const minPaginationElems = 3 + props.rangeSize * 2;
 
       let rangeStart = props.pages <= minPaginationElems ? 1 : props.modelValue - props.rangeSize;
       let rangeEnd =
@@ -176,6 +162,10 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @import './src/assets/styles/_settings.scss';
+.PaginationContainer {
+  display: flex;
+  justify-content: space-between;
+}
 
 .Pagination {
   display: flex;
